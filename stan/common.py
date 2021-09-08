@@ -34,7 +34,8 @@ class HttpstanClient:
         host, port = "127.0.0.1", unused_tcp_port()
         site = aiohttp.web.TCPSite(self.runner, host, port)
         await site.start()
-        self.session = aiohttp.ClientSession()
+        timeout = aiohttp.ClientTimeout(total=600)
+        self.session = aiohttp.ClientSession(timeout=timeout)
         self.base_url = f"http://{host}:{port}/v1"
         return self
 
